@@ -1,0 +1,34 @@
+import { OfficerStatus } from '../../../common/constants/status.enum';
+import { Department } from './department.entity';
+import { Designation } from './designation.entity';
+import { Role } from './role.entity';
+import { State } from '../../administrative-scope/entities/state.entity';
+import { District } from '../../administrative-scope/entities/district.entity';
+import { Taluk } from '../../administrative-scope/entities/taluk.entity';
+import { Village } from '../../administrative-scope/entities/village.entity';
+export declare class Officer {
+    id: string;
+    employeeId: string;
+    fullName: string;
+    email: string;
+    password?: string;
+    phone: string;
+    departmentId: string;
+    department: Department;
+    designationId: string;
+    designation: Designation;
+    roleId: string;
+    role: Role;
+    stateId: string;
+    state: State;
+    districtId: string;
+    district: District;
+    talukId: string;
+    taluk: Taluk;
+    villageId: string;
+    village: Village;
+    status: OfficerStatus;
+    lastLoginAt: Date;
+    createdAt: Date;
+    updatedAt: Date;
+}

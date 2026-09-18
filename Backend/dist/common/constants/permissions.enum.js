@@ -1,0 +1,38 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.PermissionCode = void 0;
+var PermissionCode;
+(function (PermissionCode) {
+    PermissionCode["VIEW_LAND"] = "VIEW_LAND";
+    PermissionCode["CREATE_LAND"] = "CREATE_LAND";
+    PermissionCode["UPDATE_LAND"] = "UPDATE_LAND";
+    PermissionCode["VIEW_GIS"] = "VIEW_GIS";
+    PermissionCode["VERIFY_OWNERSHIP"] = "VERIFY_OWNERSHIP";
+    PermissionCode["APPROVE_MUTATION"] = "APPROVE_MUTATION";
+    PermissionCode["VIEW_TRANSFER_HISTORY"] = "VIEW_TRANSFER_HISTORY";
+    PermissionCode["VIEW_DOCUMENTS"] = "VIEW_DOCUMENTS";
+    PermissionCode["CREATE_SURVEY"] = "CREATE_SURVEY";
+    PermissionCode["UPDATE_SURVEY"] = "UPDATE_SURVEY";
+    PermissionCode["UPDATE_PROPOSED_BOUNDARY"] = "UPDATE_PROPOSED_BOUNDARY";
+    PermissionCode["UPLOAD_SURVEY_DOCUMENT"] = "UPLOAD_SURVEY_DOCUMENT";
+    PermissionCode["SUBMIT_SURVEY_VERIFICATION"] = "SUBMIT_SURVEY_VERIFICATION";
+    PermissionCode["VIEW_OWNERSHIP"] = "VIEW_OWNERSHIP";
+    PermissionCode["VERIFY_REGISTRATION"] = "VERIFY_REGISTRATION";
+    PermissionCode["CREATE_TRANSFER"] = "CREATE_TRANSFER";
+    PermissionCode["UPLOAD_REGISTRATION_DOCUMENT"] = "UPLOAD_REGISTRATION_DOCUMENT";
+    PermissionCode["VIEW_PROPERTY"] = "VIEW_PROPERTY";
+    PermissionCode["VERIFY_PROPERTY"] = "VERIFY_PROPERTY";
+    PermissionCode["VERIFY_TAX"] = "VERIFY_TAX";
+    PermissionCode["UPLOAD_PROPERTY_DOCUMENT"] = "UPLOAD_PROPERTY_DOCUMENT";
+    PermissionCode["MANAGE_DEPARTMENTS"] = "MANAGE_DEPARTMENTS";
+    PermissionCode["MANAGE_DESIGNATIONS"] = "MANAGE_DESIGNATIONS";
+    PermissionCode["MANAGE_USERS"] = "MANAGE_USERS";
+    PermissionCode["MANAGE_ROLES"] = "MANAGE_ROLES";
+    PermissionCode["MANAGE_PERMISSIONS"] = "MANAGE_PERMISSIONS";
+    PermissionCode["MANAGE_SCOPE"] = "MANAGE_SCOPE";
+    PermissionCode["VIEW_ALL_LANDS"] = "VIEW_ALL_LANDS";
+    PermissionCode["VIEW_ALL_VERIFICATIONS"] = "VIEW_ALL_VERIFICATIONS";
+    PermissionCode["VIEW_AUDIT_LOGS"] = "VIEW_AUDIT_LOGS";
+    PermissionCode["VIEW_DIGITAL_TWINS"] = "VIEW_DIGITAL_TWINS";
+})(PermissionCode || (exports.PermissionCode = PermissionCode = {}));
+//# sourceMappingURL=permissions.enum.js.map

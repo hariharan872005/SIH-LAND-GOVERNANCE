@@ -1,0 +1,10 @@
+import { PermissionCode } from '../constants/permissions.enum';
+import { OfficerRole } from '../constants/roles.enum';
+export declare const PERMISSIONS_KEY = "permissions";
+export declare const RequirePermissions: (...permissions: PermissionCode[]) => import("@nestjs/common").CustomDecorator<string>;
+export declare const ROLES_KEY = "roles";
+export declare const RequireRoles: (...roles: OfficerRole[]) => import("@nestjs/common").CustomDecorator<string>;
+export declare const IS_PUBLIC_KEY = "isPublic";
+export declare const Public: () => import("@nestjs/common").CustomDecorator<string>;
+export declare const REQUIRE_JURISDICTION_KEY = "requireJurisdiction";
+export declare const RequireJurisdiction: (entityField?: string) => import("@nestjs/common").CustomDecorator<string>;

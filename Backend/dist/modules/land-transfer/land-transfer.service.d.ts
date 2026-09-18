@@ -1,0 +1,35 @@
+import { Repository, DataSource } from 'typeorm';
+import { LandParcel } from '../lands/entities/land-parcel.entity';
+import { LandOwner } from '../lands/entities/land-owner.entity';
+import { LandOwnershipHistory } from '../lands/entities/land-ownership-history.entity';
+import { LandTransfer } from './entities/land-transfer.entity';
+import { LandTransferTransaction } from './entities/land-transfer-transaction.entity';
+import { LandVerification } from '../verification/entities/land-verification.entity';
+import { OutboxEvent } from '../../integrations/kafka/entities/outbox-event.entity';
+import { IdempotencyRecord } from '../../common/entities/idempotency-record.entity';
+import { CreateTransferDto } from './dto/create-transfer.dto';
+import { AuthenticatedUser } from '../../common/decorators/current-user.decorator';
+import { Neo4jService } from '../../integrations/neo4j/neo4j.service';
+import { KafkaProducerService } from '../../integrations/kafka/kafka-producer.service';
+import { RedisService } from '../../integrations/redis/redis.service';
+import { AuditService } from '../audit/audit.service';
+export declare class LandTransferService {
+    private readonly landRepo;
+    private readonly ownerRepo;
+    private readonly historyRepo;
+    private readonly transferRepo;
+    private readonly txRepo;
+    private readonly verificationRepo;
+    private readonly outboxRepo;
+    private readonly idempotencyRepo;
+    private readonly neo4jService;
+    private readonly kafkaProducer;
+    private readonly redisService;
+    private readonly auditService;
+    private readonly dataSource;
+    private readonly logger;
+    constructor(landRepo: Repository<LandParcel>, ownerRepo: Repository<LandOwner>, historyRepo: Repository<LandOwnershipHistory>, transferRepo: Repository<LandTransfer>, txRepo: Repository<LandTransferTransaction>, verificationRepo: Repository<LandVerification>, outboxRepo: Repository<OutboxEvent>, idempotencyRepo: Repository<IdempotencyRecord>, neo4jService: Neo4jService, kafkaProducer: KafkaProducerService, redisService: RedisService, auditService: AuditService, dataSource: DataSource);
+    executeOwnershipTransfer(dto: CreateTransferDto, subRegistrar: AuthenticatedUser, idempotencyKey?: string): Promise<any>;
+    getTransfersByLand(landId: string): Promise<LandTransfer[]>;
+    getOwnershipHistory(landId: string): Promise<LandOwnershipHistory[]>;
+}
