@@ -111,8 +111,15 @@ export const RolesPage: React.FC = () => {
             <ShieldCheck className="w-4 h-4" />
           </div>
           <div>
-            <p className="font-bold text-slate-900">{row.name}</p>
-            <p className="text-[11px] text-slate-500 max-w-sm truncate">{row.description}</p>
+            <div className="flex items-center gap-2">
+              <p className="font-bold text-slate-900">{row.name}</p>
+              {row.isSystemRole && (
+                <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">
+                  SYSTEM
+                </span>
+              )}
+            </div>
+            <p className="text-[11px] text-slate-500 max-w-sm truncate">{row.description || 'System access policy'}</p>
           </div>
         </div>
       ),
@@ -124,30 +131,39 @@ export const RolesPage: React.FC = () => {
       render: (row) => (
         <span className="inline-flex items-center gap-1.5 text-xs text-slate-800 font-semibold">
           <Building2 className="w-3.5 h-3.5 text-slate-400" />
-          {row.departmentName}
+          {row.departmentName || (row.isSystemRole ? 'System-Wide' : 'All Departments')}
         </span>
       ),
     },
     {
       key: 'permissions',
       header: 'Permissions Assigned',
-      render: (row) => (
-        <div className="flex flex-wrap gap-1 max-w-md">
-          {row.permissions.slice(0, 3).map((p) => (
-            <span
-              key={p}
-              className="px-2 py-0.5 rounded bg-slate-100 text-slate-800 border border-slate-200 text-[10px] font-mono"
-            >
-              {p}
-            </span>
-          ))}
-          {row.permissions.length > 3 && (
-            <span className="px-1.5 py-0.5 rounded bg-slate-200 text-slate-700 text-[10px] font-bold">
-              +{row.permissions.length - 3} more
-            </span>
-          )}
-        </div>
-      ),
+      render: (row) => {
+        const perms = Array.isArray(row.permissions) ? row.permissions : [];
+        return (
+          <div className="flex flex-wrap gap-1 max-w-md">
+            {perms.slice(0, 3).map((p: any, idx: number) => {
+              const code = typeof p === 'object' && p !== null ? (p.code || p.name || `perm-${idx}`) : String(p);
+              return (
+                <span
+                  key={`${row.id}-${code}-${idx}`}
+                  className="px-2 py-0.5 rounded bg-slate-100 text-slate-800 border border-slate-200 text-[10px] font-mono"
+                >
+                  {code}
+                </span>
+              );
+            })}
+            {perms.length > 3 && (
+              <span className="px-1.5 py-0.5 rounded bg-slate-200 text-slate-700 text-[10px] font-bold">
+                +{perms.length - 3} more
+              </span>
+            )}
+            {perms.length === 0 && (
+              <span className="text-[11px] text-slate-400 italic">No permissions assigned</span>
+            )}
+          </div>
+        );
+      },
     },
     {
       key: 'officerCount',
@@ -156,7 +172,7 @@ export const RolesPage: React.FC = () => {
       render: (row) => (
         <span className="inline-flex items-center gap-1.5 text-xs text-slate-700 font-mono">
           <Users className="w-3.5 h-3.5 text-slate-400" />
-          {row.officerCount}
+          {row.officerCount ?? 0}
         </span>
       ),
     },
@@ -166,7 +182,7 @@ export const RolesPage: React.FC = () => {
       sortable: true,
       render: (row) => (
         <span className="text-xs text-slate-500 font-mono">
-          {new Date(row.createdAt).toLocaleDateString()}
+          {row.createdAt ? new Date(row.createdAt).toLocaleDateString() : '—'}
         </span>
       ),
     },

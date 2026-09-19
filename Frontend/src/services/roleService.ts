@@ -13,8 +13,35 @@ export interface CreateRoleDto {
 
 export const roleService = {
   async getAll(): Promise<Role[]> {
-    const res = await apiClient.get<ApiEnvelope<Role[]>>('/roles');
-    return res.data.data;
+    const res = await apiClient.get<ApiEnvelope<any[]>>('/roles');
+    const roles = Array.isArray(res.data?.data) ? res.data.data : [];
+    return roles.map((r: any) => {
+      const permissionCodes: PermissionCode[] = Array.isArray(r.permissions)
+        ? r.permissions.map((p: any) =>
+            typeof p === 'object' && p !== null ? (p.code || p.name || '') : String(p)
+          ).filter(Boolean)
+        : [];
+
+      return {
+        id: r.id,
+        name: r.name || 'Unnamed Role',
+        departmentId: r.departmentId || '',
+        departmentName:
+          r.department?.name ||
+          r.departmentName ||
+          (r.isSystemRole ? 'System Wide / All Departments' : 'General'),
+        designationId: r.designationId || '',
+        designationTitle: r.designationTitle || r.designation?.title || '',
+        description:
+          r.description ||
+          (r.isSystemRole ? 'System-defined governance access policy' : 'Departmental RBAC clearance policy'),
+        permissions: permissionCodes,
+        isSystemRole: Boolean(r.isSystemRole),
+        officerCount: Number(r.officerCount ?? (Array.isArray(r.officers) ? r.officers.length : 0)),
+        createdAt: r.createdAt || new Date().toISOString(),
+        updatedAt: r.updatedAt || new Date().toISOString(),
+      };
+    });
   },
 
   async getById(id: string): Promise<Role | undefined> {
@@ -35,10 +62,25 @@ export const roleService = {
 
 export const permissionService = {
   async getAll(): Promise<Permission[]> {
+    try {
+      const res = await apiClient.get<ApiEnvelope<any[]>>('/permissions');
+      if (Array.isArray(res.data?.data) && res.data.data.length > 0) {
+        return res.data.data.map((p: any) => ({
+          id: p.id || p.code,
+          code: p.code,
+          name: p.name || p.code,
+          category: p.category || 'SYSTEM',
+          description: p.description || `${p.name || p.code} authorization capability`,
+        }));
+      }
+    } catch {
+      // fallback to static constants
+    }
     return ALL_PERMISSIONS;
   },
 
   async getByCategory(category: Permission['category']): Promise<Permission[]> {
-    return ALL_PERMISSIONS.filter((p) => p.category === category);
+    const all = await this.getAll();
+    return all.filter((p) => p.category === category);
   }
 };
