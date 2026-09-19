@@ -29,11 +29,13 @@ const documents_module_1 = require("./modules/documents/documents.module");
 const search_module_1 = require("./modules/search/search.module");
 const audit_module_1 = require("./modules/audit/audit.module");
 const health_module_1 = require("./modules/health/health.module");
+const app_controller_1 = require("./app.controller");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
+        controllers: [app_controller_1.AppController],
         imports: [
             config_1.ConfigModule.forRoot({
                 isGlobal: true,
